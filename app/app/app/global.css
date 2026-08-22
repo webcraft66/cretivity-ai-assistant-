@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Ambient mesh backdrop + floating pigment blobs                          */
+/* ---------------------------------------------------------------------- */
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: theme("backgroundImage.mesh-light");
+  z-index: -2;
+}
+
+.dark .app-shell::before {
+  background-image: theme("backgroundImage.mesh-dark");
+}
+
+.pigment-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pigment-blob {
+    animation-name: blob-float;
+    animation-duration: 16s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Chat scroll area                                                       */
+/* ---------------------------------------------------------------------- */
+
+.chat-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 90, 54, 0.25);
+  border-radius: 9999px;
+}
+.dark .chat-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 143, 107, 0.3);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Organic, asymmetric chat bubble shapes (the page's signature detail)   */
+/* ---------------------------------------------------------------------- */
+
+.bubble-assistant {
+  border-radius: 22px 22px 22px 6px;
+}
+.bubble-user {
+  border-radius: 22px 22px 6px 22px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Mini markdown rendering for assistant messages                         */
+/* ---------------------------------------------------------------------- */
+
+.message-content p {
+  margin: 0 0 0.5rem 0;
+}
+.message-content p:last-child {
+  margin-bottom: 0;
+}
+.message-content ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 0.25rem 0 0.5rem 0;
+}
+.message-content li {
+  margin-bottom: 0.15rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Shimmer skeleton (used sparingly, e.g. connecting state)               */
+/* ---------------------------------------------------------------------- */
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    theme("colors.ink.faint") 25%,
+    theme("colors.coral.DEFAULT") 50%,
+    theme("colors.ink.faint") 75%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 2.5s linear infinite;
+}
